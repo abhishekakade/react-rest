@@ -28,7 +28,7 @@ const useFetch = (url) => {
     // https://gorest.co.in/public/v1/users?page=1
   }, [url]);
 
-  // console.log(launchInfo);
+  console.log("fetching data...");
   return { isLoading, apiData, serverError };
 };
 
