@@ -1,0 +1,15 @@
+#users-table {
+  margin: auto;
+  padding: 1rem;
+  border: none;
+  text-align: left;
+}
+
+#users-table thead {
+  background: #eeeeee;
+}
+
+#users-table th,
+#users-table td {
+  padding: 1rem;
+}

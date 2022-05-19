@@ -1,21 +1,21 @@
 import "./App.css";
+import { createContext, } from "react";
+import useFetch from "./hooks/useFetch";
+import Home from "./components/Home";
+
+export const DataContext = createContext();
 
 function App() {
+  const URL = "https://gorest.co.in/public/v1/users";
+  const { isLoading, serverError, apiData } = useFetch(URL);
+  console.log(isLoading, serverError, apiData);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Users List</h1>
+      <DataContext.Provider value={{ isLoading, serverError, apiData }}>
+        <Home />
+      </DataContext.Provider>
     </div>
   );
 }
