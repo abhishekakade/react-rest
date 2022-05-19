@@ -1,6 +1,24 @@
-# Getting Started with Create React App
+# React REST API App with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+NPM Packages Used:
+
+- axios, react-paginate, @styled-icons/fa-solid
+
+API Used:
+
+- `https://gorest.co.in/public/v1/users`
+
+Steps to set this project up locally:
+
+- You will need `git` installed on your system. If you do not have `git` installed, follow the instructions [here](https://github.com/git-guides/install-git) for your operating system.
+- Then clone the project to your system with the following command.
+- `git clone https://github.com/abhishekakade/react-rest.git`
+- `cd react-rest` - to change directory to the project repo.
+- `npm install` - to install all the npm packages and dependencies.
+- `npm run start` - to start and run the web app on your local server.
+- Visit the link you see after running `npm run start` in your web browser to access the web app. Usually it will be `http://localhost:3000`.
 
 ## Available Scripts
 
