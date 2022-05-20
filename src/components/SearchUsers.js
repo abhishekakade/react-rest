@@ -29,19 +29,23 @@ const SearchUsers = (props) => {
       // console.log(emailRegex.test(targetVal));
 
       if (emailRegex.test(targetVal)) {
-        console.log("email:", targetVal);
+        // console.log("email:", targetVal);
         emailParam && targetVal && setFinalURL(URL + emailParam + targetVal);
       } else if (parseInt(targetVal)) {
-        console.log("num:", targetVal);
+        // console.log("num:", targetVal);
         idParam && targetVal && setFinalURL(URL + idParam + targetVal);
       } else {
-        console.log("string:", targetVal);
+        // console.log("string:", targetVal);
         nameParam && targetVal && setFinalURL(URL + nameParam + targetVal);
+      }
+
+      if (targetVal === "") {
+        setFinalURL("https://gorest.co.in/public/v1/users");
       }
     }
   };
 
-  console.log("finalURL", finalURL);
+  // console.log("finalURL", finalURL);
 
   useEffect(() => {
     if (finalURL) {
@@ -71,12 +75,12 @@ const SearchUsers = (props) => {
   // show the user input value to console
   const getInputValue = (event) => {
     let targetVal = event.target.value.trim();
-    console.log(targetVal);
+    // console.log(targetVal);
   };
 
   return (
     <div>
-      <p>Search</p>
+      <h1>Users</h1>
       <div className="wrapper">
         <FontAwesomeIcon icon={faMagnifyingGlass} />
         <input

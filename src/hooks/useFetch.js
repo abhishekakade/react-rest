@@ -25,10 +25,10 @@ const useFetch = (url) => {
     };
 
     fetchData();
-    // https://gorest.co.in/public/v1/users?page=1
+    // https://gorest.co.in/public/v1/users
   }, [url]);
 
-  console.log("fetching data from: ", url);
+  // console.log("fetching data from: ", url);
 
   return { isLoading, apiData, serverError };
 };

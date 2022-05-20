@@ -51,10 +51,10 @@ const Home = () => {
     }
   }, [lastInd, searchedUsersData, startInd, users]);
 
-  console.log(currentSixUsers);
+  // console.log(currentSixUsers);
 
   const handlePageClick = (event) => {
-    console.log("handle page click", event.selected, typeof event.selected);
+    // console.log("handle page click", event.selected, typeof event.selected);
 
     let startArrInd = parseInt(event?.selected) * usersPerPage;
     let lastArrInd = parseInt(event?.selected + 1) * usersPerPage;
@@ -99,7 +99,7 @@ const Home = () => {
     // console.log(sortedCurrentUsers);
     setCurrentSixUsers(sortedCurrentUsers);
 
-    console.log("handle id sort");
+    // console.log("handle id sort");
   };
 
   const handleNameSort = (e) => {
@@ -141,10 +141,10 @@ const Home = () => {
     // console.log("name sort", sortedCurrentUsers);
     setCurrentSixUsers(sortedCurrentUsers);
 
-    console.log("handle name sort");
+    // console.log("handle name sort");
   };
 
-  console.log("searchedUsersData", searchedUsersData);
+  // console.log("searchedUsersData", searchedUsersData);
 
   return (
     <ErrorBoundary serverError={serverError} isLoading={isLoading}>
