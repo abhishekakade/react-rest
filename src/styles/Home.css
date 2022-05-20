@@ -13,3 +13,106 @@
 #users-table td {
   padding: 1rem;
 }
+
+#users-table .svg-inline--fa {
+  margin: 0;
+  margin-right: 0.5rem;
+}
+
+#users-table .gender {
+  text-transform: capitalize;
+}
+
+#users-table .active,
+#users-table .inactive {
+  font-weight: bold;
+  text-transform: capitalize;
+  border-radius: 40px;
+  display: inline-block;
+  width: 8ch;
+  margin: auto;
+  padding: 0 0.25rem;
+  text-align: center;
+}
+
+#users-table .active {
+  border: 1px solid #27a513;
+  background: rgba(39, 165, 19, 0.1);
+  color: #27a513;
+}
+
+#users-table .inactive {
+  background: rgba(239, 78, 78, 0.1);
+  border: 1px solid #ef4e4e;
+  color: #ef4e4e;
+}
+
+#user-id-column.ascending .fa-sort-up {
+  color: black !important;
+}
+
+#user-id-column.descending .fa-sort-down {
+  color: black !important;
+}
+
+#user-name-column.ascending .fa-sort-up {
+  color: black !important;
+}
+
+#user-name-column.descending .fa-sort-down {
+  color: black !important;
+}
+
+/* React Paginate Styles */
+
+.react-paginate li a {
+  padding: 1rem;
+  border: 1px solid #dddddd;
+  border-radius: 50%;
+  line-height: 10px;
+  display: block;
+  cursor: pointer;
+}
+
+.react-paginate .active-paginate-link {
+  background-color: black;
+  color: white;
+}
+
+.react-paginate li .previous-paginate-link,
+.react-paginate li .next-paginate-link {
+  height: 2rem;
+  border: none;
+  border-radius: 0;
+  line-height: 1rem;
+  display: block;
+  padding: 0.5rem;
+}
+
+.react-paginate li .previous-paginate-link .svg-inline--fa,
+.react-paginate li .next-paginate-link .svg-inline--fa {
+  height: 1.25rem;
+  padding: 0.5rem;
+}
+
+#user-id-column,
+#user-name-column {
+  cursor: pointer;
+}
+
+#user-id-column .fa-sort-up,
+#user-name-column .fa-sort-up {
+  width: 7px;
+  height: auto;
+  margin: 0 0 0 0.25rem;
+  color: rgba(0, 0, 0, 0.4);
+  vertical-align: baseline;
+}
+#user-id-column .fa-sort-down,
+#user-name-column .fa-sort-down {
+  width: 7px;
+  height: auto;
+  margin: 0 0 0 -7px;
+  color: rgba(0, 0, 0, 0.4);
+  vertical-align: baseline;
+}

@@ -1,7 +1,17 @@
+import ErrorBoundary from "./ErrorBoundary";
 import React, { Fragment, useContext, useState, useEffect } from "react";
 import { DataContext } from "../App";
 import ReactPaginate from "react-paginate";
-import ErrorBoundary from "./ErrorBoundary";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faEnvelope,
+  faPerson,
+  faPersonDress,
+  faAngleLeft,
+  faAngleRight,
+  faSortUp,
+  faSortDown,
+} from "@fortawesome/free-solid-svg-icons";
 import "../styles/Home.css";
 
 const Home = () => {
@@ -17,15 +27,24 @@ const Home = () => {
   const [startInd, setStartInd] = useState(0);
   // last index for slice of first 6 users on initial load
   const [lastInd, setLastInd] = useState(6);
+  // array of current 6 users being displayed on page
+  const [currentSixUsers, setCurrentSixUsers] = useState([]);
+  // sort toggle
+
+  const [ascending, descending] = ["ascending", "descending"];
+  const [sort, setSort] = useState(ascending);
 
   useEffect(() => {
     if (apiData) {
       setUsers(apiData?.data);
+      setCurrentSixUsers(users?.slice(startInd, lastInd));
     }
-  }, [apiData]);
+  }, [apiData, lastInd, startInd, users]);
+
+  console.log(currentSixUsers);
 
   const handlePageClick = (event) => {
-    // console.log("handle page click", event.selected, typeof event.selected);
+    console.log("handle page click", event.selected, typeof event.selected);
 
     let startArrInd = parseInt(event?.selected) * usersPerPage;
     let lastArrInd = parseInt(event?.selected + 1) * usersPerPage;
@@ -36,40 +55,128 @@ const Home = () => {
     // console.log(users.slice(startArrInd, lastArrInd));
   };
 
-  return (
-    <ErrorBoundary errorProps={(serverError, isLoading)}>
-      <Fragment>
-        <table id="users-table" cellSpacing="0">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Gender</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users?.slice(startInd, lastInd).map((user) => (
-              <tr key={user.id}>
-                <td>{user.id}</td>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{user.gender}</td>
-                <td>{user.status}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+  const genderIcon = (gender) => {
+    if (gender.toLowerCase() === "male") {
+      return <FontAwesomeIcon icon={faPerson} />;
+    } else if (gender.toLowerCase() === "female") {
+      return <FontAwesomeIcon icon={faPersonDress} />;
+    } else return;
+  };
 
-        <ReactPaginate
-          previousLabel={"<<"}
-          nextLabel={">>"}
-          onPageChange={handlePageClick}
-          pageCount={Math.ceil(users?.length / usersPerPage)}
-          className="react-paginate"
-        />
-      </Fragment>
+  const activeStatus = (status) => {
+    if (status.toLowerCase() === "active") {
+      return " active";
+    } else if (status.toLowerCase() === "inactive") {
+      return " inactive";
+    }
+  };
+
+  const handleIdSort = (e) => {
+    let sortedCurrentUsers;
+
+    // change fa icon color depending on which sort
+    e.target.className = sort;
+    if (sort === ascending) {
+      sortedCurrentUsers = [...currentSixUsers].sort((a, b) => a.id - b.id);
+      setSort(descending);
+    }
+
+    if (sort === descending) {
+      sortedCurrentUsers = [...currentSixUsers].sort((a, b) => b.id - a.id);
+      setSort(ascending);
+    }
+
+    // console.log(sortedCurrentUsers);
+    setCurrentSixUsers(sortedCurrentUsers);
+
+    console.log("handle id sort");
+  };
+
+  const handleNameSort = (e) => {
+    let sortedCurrentUsers;
+
+    // change fa icon color depending on which sort
+    e.target.className = sort;
+
+    if (sort === ascending) {
+      sortedCurrentUsers = [...currentSixUsers].sort((a, b) =>
+        a.name?.split(" ")[0].toLowerCase() >
+        b.name?.split(" ")[0].toLowerCase()
+          ? 1
+          : -1
+      );
+
+      setSort(descending);
+    }
+
+    if (sort === descending) {
+      sortedCurrentUsers = [...currentSixUsers].sort((a, b) =>
+        a.name?.split(" ")[0].toLowerCase() <
+        b.name?.split(" ")[0].toLowerCase()
+          ? 1
+          : -1
+      );
+      setSort(ascending);
+    }
+
+    // console.log("name sort", sortedCurrentUsers);
+    setCurrentSixUsers(sortedCurrentUsers);
+
+    console.log("handle name sort");
+  };
+
+  return (
+    <ErrorBoundary serverError={serverError} isLoading={isLoading}>
+      {/* <Fragment> */}
+      <table id="users-table" cellSpacing="0">
+        <thead>
+          <tr>
+            <th id="user-id-column" onClick={(e) => handleIdSort(e)}>
+              ID <FontAwesomeIcon icon={faSortUp} />
+              <FontAwesomeIcon icon={faSortDown} />
+            </th>
+            <th id="user-name-column" onClick={(e) => handleNameSort(e)}>
+              Name <FontAwesomeIcon icon={faSortUp} />
+              <FontAwesomeIcon icon={faSortDown} />
+            </th>
+            <th>Email</th>
+            <th>Gender</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {currentSixUsers?.map((user) => (
+            <tr key={user.id}>
+              <td>{user.id}</td>
+              <td>{user.name}</td>
+              <td>
+                <FontAwesomeIcon icon={faEnvelope} />
+                {user.email}
+              </td>
+              <td className="gender">
+                {genderIcon(user.gender)}
+                {user.gender}
+              </td>
+              <td>
+                <span className={activeStatus(user.status)}>{user.status}</span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <ReactPaginate
+        previousLabel={<FontAwesomeIcon icon={faAngleLeft} />}
+        nextLabel={<FontAwesomeIcon icon={faAngleRight} />}
+        onPageChange={handlePageClick}
+        pageCount={users?.length ? Math.ceil(users?.length / usersPerPage) : 3}
+        className="react-paginate"
+        // pageRangeDisplayed={3}
+        activeLinkClassName="active-paginate-link"
+        previousLinkClassName="previous-paginate-link"
+        nextLinkClassName="next-paginate-link"
+      />
+      {/* </Fragment> */}
     </ErrorBoundary>
   );
 };
