@@ -1,4 +1,6 @@
 #users-table {
+  border-collapse: separate;
+  border-spacing: 0 1.25rem;
   margin: auto;
   padding: 1rem;
   border: none;
@@ -66,7 +68,7 @@
 /* React Paginate Styles */
 
 .react-paginate li a {
-  padding: 1rem;
+  padding: 0.75rem;
   border: 1px solid #dddddd;
   border-radius: 50%;
   line-height: 10px;
@@ -92,7 +94,7 @@
 .react-paginate li .previous-paginate-link .svg-inline--fa,
 .react-paginate li .next-paginate-link .svg-inline--fa {
   height: 1.25rem;
-  padding: 0.5rem;
+  padding: 0;
 }
 
 #user-id-column,
@@ -115,4 +117,18 @@
   margin: 0 0 0 -7px;
   color: rgba(0, 0, 0, 0.4);
   vertical-align: baseline;
+}
+
+#users-table thead tr {
+  border: 1px solid #dddddd;
+  border-radius: 10px;
+  background: #eeeeee;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+#users-table tbody tr {
+  border: 1px solid #dddddd;
+  border-radius: 10px !important;
+  margin: 1rem auto;
+  background: white;
 }

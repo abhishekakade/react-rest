@@ -1,0 +1,27 @@
+.wrapper {
+  position: relative;
+  padding: 0;
+  margin: auto;
+  display: inline-block;
+  background-color: white;
+}
+
+.fa-magnifying-glass {
+  height: 1rem;
+  width: 1rem;
+  padding: 0.5rem;
+  position: absolute;
+  box-sizing: border-box;
+  top: 50%;
+  left: 2px;
+  transform: translateY(-50%);
+}
+
+input {
+  height: 30px;
+  width: 30ch;
+  box-sizing: border-box;
+  padding: 0 0 0 2rem;
+  border: 1px solid #dddddd;
+  border-radius: 20px;
+}

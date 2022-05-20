@@ -1,5 +1,5 @@
 import ErrorBoundary from "./ErrorBoundary";
-import React, { Fragment, useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { DataContext } from "../App";
 import ReactPaginate from "react-paginate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,6 +13,7 @@ import {
   faSortDown,
 } from "@fortawesome/free-solid-svg-icons";
 import "../styles/Home.css";
+import SearchUsers from "./SearchUsers";
 
 const Home = () => {
   // using ContextAPI to share fetched API data between components
@@ -29,7 +30,9 @@ const Home = () => {
   const [lastInd, setLastInd] = useState(6);
   // array of current 6 users being displayed on page
   const [currentSixUsers, setCurrentSixUsers] = useState([]);
-  // sort toggle
+
+  // to get search component data
+  const [searchedUsersData, setSearchedUsersData] = useState([]);
 
   const [ascending, descending] = ["ascending", "descending"];
   const [sort, setSort] = useState(ascending);
@@ -40,6 +43,13 @@ const Home = () => {
       setCurrentSixUsers(users?.slice(startInd, lastInd));
     }
   }, [apiData, lastInd, startInd, users]);
+
+  useEffect(() => {
+    if (searchedUsersData) {
+      setUsers(searchedUsersData);
+      setCurrentSixUsers(users?.slice(startInd, lastInd));
+    }
+  }, [lastInd, searchedUsersData, startInd, users]);
 
   console.log(currentSixUsers);
 
@@ -110,12 +120,21 @@ const Home = () => {
     }
 
     if (sort === descending) {
-      sortedCurrentUsers = [...currentSixUsers].sort((a, b) =>
-        a.name?.split(" ")[0].toLowerCase() <
-        b.name?.split(" ")[0].toLowerCase()
-          ? 1
-          : -1
-      );
+      sortedCurrentUsers = [...currentSixUsers].sort((a, b) => {
+        let aFirstName = a.name?.split(" ")[0].toLowerCase();
+        let bFirstName = b.name?.split(" ")[0].toLowerCase();
+        let aLastName = a.name?.split(" ")[1].toLowerCase();
+        let bLastName = b.name?.split(" ")[1].toLowerCase();
+
+        if (aFirstName === bFirstName) {
+          if (aLastName < bLastName) {
+            return 1;
+          } else return -1;
+        }
+
+        if (aFirstName < bFirstName) return 1;
+        else return -1;
+      });
       setSort(ascending);
     }
 
@@ -125,10 +144,13 @@ const Home = () => {
     console.log("handle name sort");
   };
 
+  console.log("searchedUsersData", searchedUsersData);
+
   return (
     <ErrorBoundary serverError={serverError} isLoading={isLoading}>
-      {/* <Fragment> */}
+      <SearchUsers passChildData={setSearchedUsersData} />
       <table id="users-table" cellSpacing="0">
+        {/* <table id="users-table"> */}
         <thead>
           <tr>
             <th id="user-id-column" onClick={(e) => handleIdSort(e)}>
@@ -176,7 +198,6 @@ const Home = () => {
         previousLinkClassName="previous-paginate-link"
         nextLinkClassName="next-paginate-link"
       />
-      {/* </Fragment> */}
     </ErrorBoundary>
   );
 };
